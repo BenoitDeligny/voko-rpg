@@ -3,7 +3,7 @@ plugins {
 }
 
 group = "vokorpg"
-version = "unspecified"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -12,7 +12,10 @@ repositories {
 dependencies {
     implementation(project(":sharedkernel"))
 
-    testImplementation(kotlin("test"))
+    implementation("com.aallam.ulid:ulid-kotlin:1.3.0")
+
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("io.kotest:kotest-runner-junit5:5.8.1")
 }
 
 tasks.test {

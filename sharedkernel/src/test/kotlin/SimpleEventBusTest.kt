@@ -1,14 +1,14 @@
-﻿import org.junit.jupiter.api.Assertions.assertEquals
+﻿import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
+import ulid.ULID
+import ulid.ULID.Companion.nextULID
 import java.util.*
-import java.util.UUID.randomUUID
-import kotlin.collections.HashMap
 
 class SimpleEventBusTests {
 
     interface TestEvent
-    data class FooEvent(val id: UUID = randomUUID(), val details: String = "foo") : TestEvent
-    data class BarEvent(val id: UUID = randomUUID(), val count: Int = 100) : TestEvent
+    data class FooEvent(val id: ULID = nextULID(), val details: String = "foo") : TestEvent
+    data class BarEvent(val id: ULID = nextULID(), val count: Int = 100) : TestEvent
 
     class TestEventSubscriber(private val listener: EventListener) : Subscriber<TestEvent> {
         override fun invoke(event: TestEvent) {
@@ -49,9 +49,9 @@ class SimpleEventBusTests {
         eventBus.publish(foo)
         eventBus.publish(bar)
 
-        assertEquals(listOf(foo, bar), listener["test"])
-        assertEquals(listOf(foo), listener["foo"])
-        assertEquals(listOf(bar), listener["bar"])
+        listener["test"] shouldBe listOf(foo, bar)
+        listener["foo"] shouldBe listOf(foo)
+        listener["bar"] shouldBe listOf(bar)
     }
 
     @Test
@@ -66,6 +66,6 @@ class SimpleEventBusTests {
 
         eventBus.publish(foo)
 
-        assertEquals(listOf(foo, foo, foo), listener["foo"])
+        listener["foo"] shouldBe listOf(foo, foo, foo)
     }
 }
