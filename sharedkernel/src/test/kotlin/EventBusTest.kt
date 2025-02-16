@@ -4,7 +4,7 @@ import ulid.ULID
 import ulid.ULID.Companion.nextULID
 import java.util.*
 
-class SimpleEventBusTests {
+class SimpleEventWithFlowBusTests {
 
     interface TestEvent
     data class FooEvent(val id: ULID = nextULID(), val details: String = "foo") : TestEvent

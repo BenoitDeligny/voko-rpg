@@ -21,3 +21,36 @@ The shared build logic was extracted to a convention plugin located in `buildSrc
 
 This project uses a version catalog (see `gradle/libs.versions.toml`) to declare and version dependencies
 and both a build cache and a configuration cache (see `gradle.properties`).
+
+# vokorpg todoes
+
+TODO:
+Front
+
+- https://svelteui.dev/introduction
+
+Back
+
+USE CASES
+
+- Create a Hero
+    - two mode: totally random OR having 6-4-2 stats and chose gear and skills
+
+Domain
+
+- Add Skills to Hero
+- Add Magical Powers to Hero
+
+Exposition
+
+- Add first route for Hero Creation
+
+Infrastructure
+
+- Add in memory database
+
+Big things to think about
+
+- Adding Players
+- Adding DM
+- Adding Maps

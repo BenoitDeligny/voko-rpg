@@ -1,8 +1,5 @@
 ﻿import kotlin.reflect.KClass
 
-// Use this for simple event bus
-// Needed to be instantiated where you want to use it
-
 interface Subscriber<in E>: (E) -> Unit
 
 interface EventBus<in E> {

@@ -4,15 +4,15 @@ import kotlinx.coroutines.flow.filterIsInstance
 
 // Use this for scalable and high throughput event bus
 
-interface Event
+interface EventWithFlow
 
 object EventBusWithFlow {
-    val eventFlow = MutableSharedFlow<Event>()
+    val eventWithFlow = MutableSharedFlow<EventWithFlow>()
 
-    suspend fun publish(event: Event) {
-        eventFlow.emit(event)
+    suspend fun publish(eventWithFlow: EventWithFlow) {
+        this.eventWithFlow.emit(eventWithFlow)
     }
-    inline fun <reified T : Event> subscribe(): Flow<T> {
-        return eventFlow.filterIsInstance<T>()
+    inline fun <reified T : EventWithFlow> subscribe(): Flow<T> {
+        return eventWithFlow.filterIsInstance<T>()
     }
 }

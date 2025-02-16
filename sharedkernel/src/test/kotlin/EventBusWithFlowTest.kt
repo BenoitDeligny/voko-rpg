@@ -6,11 +6,11 @@ import org.junit.jupiter.api.Test
 import java.util.*
 import java.util.UUID.randomUUID
 
-data class TestEventFlow(val message: String) : Event
-data class FooEventFlow(val id: UUID = randomUUID(), val details: String = "foo") : Event
-data class BarEventFlow(val id: UUID = randomUUID(), val count: Int = 100) : Event
+data class TestEventFlow(val message: String) : EventWithFlow
+data class FooEventFlow(val id: UUID = randomUUID(), val details: String = "foo") : EventWithFlow
+data class BarEventFlow(val id: UUID = randomUUID(), val count: Int = 100) : EventWithFlow
 
-class EventBusTest {
+class EventWithFlowBusTest {
 
     @Test
     fun `event is received by subscriber`() = runTest {
