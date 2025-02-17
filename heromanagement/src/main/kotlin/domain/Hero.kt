@@ -10,7 +10,6 @@ data class Hero(
     val strength: Ability,
     val agility: Ability,
     val perception: Ability,
-    val gear: Gear,
     val inventory: List<Item> = emptyList(),
     val skills: List<Skill> = emptyList(),
 )
@@ -35,23 +34,6 @@ value class Ability(val value: Int) {
         require(value in 2..10) { "Ability must be between 2 and 10." }
     }
 }
-
-data class Gear(
-    val helmet: Item,
-    val mask: Item,
-    val necklace: Item,
-    val armor: Item,
-    val cloak: Item,
-    val costume: Item,
-    val bracers: Item,
-    val gloves: Item,
-    val rightRing: Item,
-    val leftRing: Item,
-    val belt: Item,
-    val boots: Item,
-    val mainHand: Item,
-    val offHand: Item,
-)
 
 data class Item(val id: ULID, val quantity: Int)
 

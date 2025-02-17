@@ -8,7 +8,6 @@ sealed interface Event {
         val strength: Int,
         val agility: Int,
         val perception: Int,
-        val gear: GearEvent,
         val inventory: List<ItemEvent>,
         val skills: List<SkillEvent>,
     ) : Event {
@@ -19,23 +18,6 @@ sealed interface Event {
             require(agility in 2..10) { "Agility must be between 2 and 10." }
             require(perception in 2..10) { "Perception must be between 2 and 10." }
         }
-
-        data class GearEvent(
-            val helmet: ItemEvent,
-            val mask: ItemEvent,
-            val necklace: ItemEvent,
-            val armor: ItemEvent,
-            val cloak: ItemEvent,
-            val costume: ItemEvent,
-            val bracers: ItemEvent,
-            val gloves: ItemEvent,
-            val rightRing: ItemEvent,
-            val leftRing: ItemEvent,
-            val belt: ItemEvent,
-            val boots: ItemEvent,
-            val mainHand: ItemEvent,
-            val offHand: ItemEvent,
-        )
 
         data class ItemEvent(
             val id: String,
