@@ -1,43 +1,20 @@
 package item
 
-import ulid.ULID
-import ulid.ULID.Companion.parseULID
-
 // Items data
 class ItemDatabase {
-    private val items = mutableMapOf<String, ItemEntity>()
+    private val items = mutableSetOf<ItemEntity>()
 
     init {
-        items["empty"] = ItemEntity(
-            id = parseULID("empty"),
-            name = "empty",
-            powerBonus = 0,
-            damageBonus = 0,
-            protectionBonus = 0
-        )
-        items["basicSword"] = ItemEntity(
-            id = parseULID("basicSword"),
-            name = "Basic sword",
-            powerBonus = 0,
-            damageBonus = 1,
-            protectionBonus = 0
-        )
-        items["basicShield"] = ItemEntity(
-            id = parseULID("basicShield"),
-            name = "Basic shield",
-            powerBonus = 0,
-            damageBonus = 0,
-            protectionBonus = 1
-        )
+        items.add(ItemEntity(id = 0, name = "Empty", powerBonus = 0, damageBonus = 0, protectionBonus = 0))
+        items.add(ItemEntity(id = 1, name = "Basic sword", powerBonus = 0, damageBonus = 1, protectionBonus = 0))
+        items.add(ItemEntity(id = 2, name = "Basic shield", powerBonus = 0, damageBonus = 0, protectionBonus = 1))
     }
 
-    fun getItem(id: ULID): ItemEntity {
-        return items[id.toString()] ?: items["empty"]!!
-    }
+    fun getItem(id: Int): ItemEntity? = items.find { it.id == id }
 }
 
 data class ItemEntity(
-    val id: ULID,
+    val id: Int,
     val name: String,
     val powerBonus: Int,
     val damageBonus: Int,

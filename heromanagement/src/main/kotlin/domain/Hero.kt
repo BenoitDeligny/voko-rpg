@@ -35,6 +35,3 @@ value class Ability(val value: Int) {
     }
 }
 
-data class Item(val id: ULID, val quantity: Int)
-
-data class Skill(val id: ULID, val level: Int)

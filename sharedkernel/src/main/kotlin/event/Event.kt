@@ -19,13 +19,11 @@ sealed interface Event {
             require(perception in 2..10) { "Perception must be between 2 and 10." }
         }
 
-        data class ItemEvent(
-            val id: String,
-            val quantity: Int,
-        )
+        @JvmInline
+        value class ItemEvent(val id: Int)
 
         data class SkillEvent(
-            val id: String,
+            val id: Int,
             val level: Int,
         )
     }
