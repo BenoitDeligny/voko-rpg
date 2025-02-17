@@ -1,4 +1,6 @@
-﻿import kotlinx.coroutines.flow.Flow
+﻿package event
+
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.filterIsInstance
 
@@ -10,7 +12,7 @@ object EventBusWithFlow {
     val eventWithFlow = MutableSharedFlow<EventWithFlow>()
 
     suspend fun publish(eventWithFlow: EventWithFlow) {
-        this.eventWithFlow.emit(eventWithFlow)
+        EventBusWithFlow.eventWithFlow.emit(eventWithFlow)
     }
     inline fun <reified T : EventWithFlow> subscribe(): Flow<T> {
         return eventWithFlow.filterIsInstance<T>()

@@ -1,4 +1,6 @@
-﻿import kotlin.reflect.KClass
+﻿package event
+
+import kotlin.reflect.KClass
 
 interface Subscriber<in E>: (E) -> Unit
 

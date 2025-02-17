@@ -1,4 +1,6 @@
-﻿import io.kotest.matchers.shouldBe
+﻿import event.SimpleEventBus
+import event.Subscriber
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 import ulid.ULID
 import ulid.ULID.Companion.nextULID

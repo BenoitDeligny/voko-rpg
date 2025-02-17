@@ -1,3 +1,5 @@
+import event.Event
+import event.SimpleEventBus
 import exposition.CreateHeroHandler
 
 fun main() {

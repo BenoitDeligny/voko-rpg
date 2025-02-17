@@ -10,11 +10,10 @@ data class Hero(
     val strength: Ability,
     val agility: Ability,
     val perception: Ability,
-    val inventory: Inventory = Inventory(),
-    val skills: List<String> = emptyList(),
-) {
-    val powerLevel = PowerLevel(strength.value + agility.value + perception.value)
-}
+    val gear: Gear,
+    val inventory: List<Item> = emptyList(),
+    val skills: List<Skill> = emptyList(),
+)
 
 @JvmInline
 value class Name(val value: String) {
@@ -37,20 +36,23 @@ value class Ability(val value: Int) {
     }
 }
 
-@JvmInline
-value class PowerLevel(val value: Int)
+data class Gear(
+    val helmet: Item,
+    val mask: Item,
+    val necklace: Item,
+    val armor: Item,
+    val cloak: Item,
+    val costume: Item,
+    val bracers: Item,
+    val gloves: Item,
+    val rightRing: Item,
+    val leftRing: Item,
+    val belt: Item,
+    val boots: Item,
+    val mainHand: Item,
+    val offHand: Item,
+)
 
-// TODO: replace String by Item
-//data class Item(
-//    val id: ULID = nextULID(),
-//    val name: String,
-//    val powerBonus: Int,
-//    val damagesBonus: Int,
-//    val protectionBonus: Int,
-//)
-@JvmInline
-value class Inventory(val value: List<String> = emptyList())
+data class Item(val id: ULID, val quantity: Int)
 
-// TODO: replace String by Skill
-@JvmInline
-value class Skills(val value: List<String>)
+data class Skill(val id: ULID, val level: Int)
