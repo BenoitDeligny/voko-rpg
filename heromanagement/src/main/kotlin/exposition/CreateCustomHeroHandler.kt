@@ -20,7 +20,7 @@ import event.Subscriber
 
 // TODO: use dependency injection here
 // TODO: add tests
-class CreateHeroHandler : Subscriber<CustomHeroEvent> {
+class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
     private val getItemUseCase: GetItem = GetItemUseCase()

@@ -2,7 +2,7 @@ import event.Event
 import event.Event.CustomHeroEvent.ItemEvent
 import event.Event.CustomHeroEvent.SkillEvent
 import event.SimpleEventBus
-import exposition.CreateHeroHandler
+import exposition.CreateCustomHeroHandler
 
 fun main() {
     println("-----Hello and welcome in a Very Old Kind Of RPG!-----")
@@ -10,7 +10,7 @@ fun main() {
     // TODO: remove this
     // this is for example and simulation of event bus
     val eventBus = SimpleEventBus<Event>()
-    val createHeroHandler = CreateHeroHandler()
+    val createCustomHeroHandler = CreateCustomHeroHandler()
 
     val customHeroEvent = Event.CustomHeroEvent(
         name = "Arthur",
@@ -24,6 +24,6 @@ fun main() {
         )
     )
 
-    createHeroHandler.invoke(customHeroEvent)
+    createCustomHeroHandler.invoke(customHeroEvent)
     eventBus.publish(customHeroEvent)
 }
