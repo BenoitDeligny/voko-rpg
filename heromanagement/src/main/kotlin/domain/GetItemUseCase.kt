@@ -7,11 +7,7 @@ import infrastructure.InMemoryItemRepository
 class GetItemUseCase : GetItem {
     private val repository: ItemRepository = InMemoryItemRepository()
 
-    override fun getItem(id: Int): Item {
+    override fun getItem(id: Int): ItemResponse {
         return repository.getItem(id)
-    }
-
-    override fun getItems(ids: List<Int>): List<Item> {
-        return repository.getItems(ids)
     }
 }

@@ -5,7 +5,7 @@ import event.SimpleEventBus
 import exposition.CreateHeroHandler
 
 fun main() {
-    println("Hello and welcome in a Very Old Kind Of RPG!")
+    println("-----Hello and welcome in a Very Old Kind Of RPG!-----")
 
     // TODO: remove this
     // this is for example and simulation of event bus

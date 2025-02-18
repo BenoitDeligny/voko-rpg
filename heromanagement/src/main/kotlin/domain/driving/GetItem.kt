@@ -1,8 +1,7 @@
 ﻿package domain.driving
 
-import domain.Item
+import domain.ItemResponse
 
 interface GetItem {
-    fun getItem(id: Int): Item
-    fun getItems(ids: List<Int>): List<Item>
+    fun getItem(id: Int): ItemResponse
 }

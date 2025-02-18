@@ -1,16 +1,21 @@
 ﻿package exposition
 
 import domain.*
+import domain.ItemResponse.Item
+import domain.ItemResponse.ItemNotFound
+import domain.SkillResponse.Skill
+import domain.SkillResponse.SkillNotFound
 import domain.driving.CustomHero
 import domain.driving.GetItem
 import domain.driving.GetSkill
 import event.Event
 import event.Event.CreateHeroEvent
+import event.Event.CreateHeroEvent.ItemEvent
+import event.Event.CreateHeroEvent.SkillEvent
 import event.SimpleEventBus
 import event.Subscriber
 
 // TODO: as of today, this is a placeholder
-// Maybe this is something that will be in DOMAIN
 // but for now it "replace" a classic controller
 
 // TODO: use dependency injection here
@@ -28,24 +33,35 @@ class CreateHeroHandler : Subscriber<CreateHeroEvent> {
     override fun invoke(event: CreateHeroEvent) {
         println("Creating a custom hero: $event")
 
-        val items = getItemUseCase.getItems(event.inventory.map { it.id })
-        val skills = event.skills.map { Skill(getSkillUseCase.getSkill(it.id).id, it.level) }
-
-        val heroToCreate = event.toDomain(items = items, skills = skills)
+        val heroToCreate = event.toHeroDomain()
         println("Hero to create: $heroToCreate")
 
         customHeroUseCase.create(heroToCreate)
     }
 
-    private fun CreateHeroEvent.toDomain(items: List<Item>, skills: List<Skill>) = Hero(
+    private fun CreateHeroEvent.toHeroDomain() = Hero(
         name = Name(name),
         age = Age(age),
         strength = Ability(strength),
         agility = Ability(agility),
         perception = Ability(perception),
-        inventory = items,
-        skills = skills,
+        inventory = inventory.toItemDomain(),
+        skills = skills.toSkillDomain(),
     )
+
+    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
+        when (val item = getItemUseCase.getItem(it.id)) {
+            is Item -> Item(id = item.id, item.name)
+            is ItemNotFound -> null
+        }
+    }
+
+    private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
+        when (val skill = getSkillUseCase.getSkill(it.id)) {
+            is Skill -> Skill(id = skill.id, level = it.level)
+            is SkillNotFound -> null
+        }
+    }
 }
 
 

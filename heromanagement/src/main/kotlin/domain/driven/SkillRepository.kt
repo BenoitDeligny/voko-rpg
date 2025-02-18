@@ -1,8 +1,7 @@
 ﻿package domain.driven
 
-import domain.Skill
+import domain.SkillResponse
 
 interface SkillRepository {
-    fun getSkill(id: Int): Skill
-    fun getSkills(ids: List<Int>): List<Skill>
+    fun getSkill(id: Int): SkillResponse
 }

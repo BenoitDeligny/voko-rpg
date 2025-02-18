@@ -1,5 +1,7 @@
 ﻿package domain
 
+import domain.ItemResponse.Item
+import domain.SkillResponse.Skill
 import ulid.ULID
 import ulid.ULID.Companion.nextULID
 

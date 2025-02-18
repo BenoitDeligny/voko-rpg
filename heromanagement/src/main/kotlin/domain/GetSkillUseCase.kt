@@ -7,11 +7,7 @@ import infrastructure.InMemorySkillRepository
 class GetSkillUseCase : GetSkill {
     private val repository: SkillRepository = InMemorySkillRepository()
 
-    override fun getSkill(id: Int): Skill {
+    override fun getSkill(id: Int): SkillResponse {
         return repository.getSkill(id)
-    }
-
-    override fun getSkills(ids: List<Int>): List<Skill> {
-        return repository.getSkills(ids)
     }
 }
