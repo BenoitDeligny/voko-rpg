@@ -2,7 +2,7 @@
 
 sealed interface Event {
 
-    data class CreateHeroEvent(
+    data class CustomHeroEvent(
         val name: String,
         val age: Int,
         val strength: Int,

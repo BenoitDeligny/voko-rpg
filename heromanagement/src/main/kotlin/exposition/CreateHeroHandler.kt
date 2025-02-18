@@ -9,9 +9,9 @@ import domain.driving.CustomHero
 import domain.driving.GetItem
 import domain.driving.GetSkill
 import event.Event
-import event.Event.CreateHeroEvent
-import event.Event.CreateHeroEvent.ItemEvent
-import event.Event.CreateHeroEvent.SkillEvent
+import event.Event.CustomHeroEvent
+import event.Event.CustomHeroEvent.ItemEvent
+import event.Event.CustomHeroEvent.SkillEvent
 import event.SimpleEventBus
 import event.Subscriber
 
@@ -20,7 +20,7 @@ import event.Subscriber
 
 // TODO: use dependency injection here
 // TODO: add tests
-class CreateHeroHandler : Subscriber<CreateHeroEvent> {
+class CreateHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
     private val getItemUseCase: GetItem = GetItemUseCase()
@@ -30,7 +30,7 @@ class CreateHeroHandler : Subscriber<CreateHeroEvent> {
         eventBus.register(this)
     }
 
-    override fun invoke(event: CreateHeroEvent) {
+    override fun invoke(event: CustomHeroEvent) {
         println("Creating a custom hero: $event")
 
         val heroToCreate = event.toHeroDomain()
@@ -39,7 +39,7 @@ class CreateHeroHandler : Subscriber<CreateHeroEvent> {
         customHeroUseCase.create(heroToCreate)
     }
 
-    private fun CreateHeroEvent.toHeroDomain() = Hero(
+    private fun CustomHeroEvent.toHeroDomain() = Hero(
         name = Name(name),
         age = Age(age),
         strength = Ability(strength),

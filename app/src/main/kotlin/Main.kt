@@ -1,6 +1,6 @@
 import event.Event
-import event.Event.CreateHeroEvent.ItemEvent
-import event.Event.CreateHeroEvent.SkillEvent
+import event.Event.CustomHeroEvent.ItemEvent
+import event.Event.CustomHeroEvent.SkillEvent
 import event.SimpleEventBus
 import exposition.CreateHeroHandler
 
@@ -12,7 +12,7 @@ fun main() {
     val eventBus = SimpleEventBus<Event>()
     val createHeroHandler = CreateHeroHandler()
 
-    val createHeroEvent = Event.CreateHeroEvent(
+    val customHeroEvent = Event.CustomHeroEvent(
         name = "Arthur",
         age = 18,
         strength = 8,
@@ -24,6 +24,6 @@ fun main() {
         )
     )
 
-    createHeroHandler.invoke(createHeroEvent)
-    eventBus.publish(createHeroEvent)
+    createHeroHandler.invoke(customHeroEvent)
+    eventBus.publish(customHeroEvent)
 }
