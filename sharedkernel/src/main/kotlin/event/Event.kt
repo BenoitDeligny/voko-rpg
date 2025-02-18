@@ -27,4 +27,6 @@ sealed interface Event {
             val level: Int,
         )
     }
+
+    data object RandomHeroEvent : Event
 }

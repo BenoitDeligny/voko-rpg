@@ -20,7 +20,7 @@ import event.Subscriber
 
 // TODO: use dependency injection here
 // TODO: add tests
-class CreateHeroHandler : Subscriber<CustomHeroEvent> {
+class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
     private val getItemUseCase: GetItem = GetItemUseCase()
@@ -33,10 +33,10 @@ class CreateHeroHandler : Subscriber<CustomHeroEvent> {
     override fun invoke(event: CustomHeroEvent) {
         println("Creating a custom hero: $event")
 
-        val heroToCreate = event.toHeroDomain()
-        println("Hero to create: $heroToCreate")
+        val hero = event.toHeroDomain()
+        println("Hero to create: $hero")
 
-        customHeroUseCase.create(heroToCreate)
+        customHeroUseCase.create(hero)
     }
 
     private fun CustomHeroEvent.toHeroDomain() = Hero(
