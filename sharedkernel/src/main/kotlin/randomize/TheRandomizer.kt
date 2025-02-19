@@ -2,6 +2,11 @@ package randomize
 
 import skill.SkillDatabase
 
+const val AGE_MIN = 15
+const val AGE_MAX = 20
+const val ABILITY_POINTS = 6
+const val SKILL_POINTS = 3
+
 class TheRandomizer {
     private val skillData = SkillDatabase()
 
@@ -17,7 +22,7 @@ class TheRandomizer {
     fun randomizeAge(): Int {
         println("Randomizing age")
 
-        return (15..20).random()
+        return (AGE_MIN..AGE_MAX).random()
     }
 
     fun randomizeAbilities(): List<Ability> {
@@ -27,7 +32,7 @@ class TheRandomizer {
         var agility = Ability("agility", 2)
         var perception = Ability("perception", 2)
 
-        repeat(6) {
+        repeat(ABILITY_POINTS) {
             when ((0..2).random()) {
                 0 -> strength = strength.copy(value = strength.value + 1)
                 1 -> agility = agility.copy(value = agility.value + 1)
@@ -47,7 +52,7 @@ class TheRandomizer {
 
         return skillData.getSkills()
             .shuffled()
-            .take(3)
+            .take(SKILL_POINTS)
             .map { Skill(name = it.name, level = 1) }
             .toList()
     }
