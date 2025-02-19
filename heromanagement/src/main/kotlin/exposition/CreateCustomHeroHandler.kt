@@ -1,6 +1,7 @@
 ﻿package exposition
 
 import domain.*
+import domain.Ability.*
 import domain.ItemResponse.Item
 import domain.ItemResponse.ItemNotFound
 import domain.SkillResponse.Skill
@@ -40,11 +41,11 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     }
 
     private fun CustomHeroEvent.toHeroDomain() = Hero(
-        name = Name(name),
+        name = Name(name.firstName, name.lastName),
         age = Age(age),
-        strength = Ability(strength),
-        agility = Ability(agility),
-        perception = Ability(perception),
+        strength = Strength(strength),
+        agility = Agility(agility),
+        perception = Perception(perception),
         inventory = inventory.toItemDomain(),
         skills = skills.toSkillDomain(),
     )
@@ -58,7 +59,7 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
 
     private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
         when (val skill = getSkillUseCase.getSkill(it.id)) {
-            is Skill -> Skill(id = skill.id, level = it.level)
+            is Skill -> Skill(name = skill.name, level = it.level)
             is SkillNotFound -> null
         }
     }

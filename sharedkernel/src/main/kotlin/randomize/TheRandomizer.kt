@@ -1,5 +1,7 @@
 package randomize
 
+import randomize.AbilityName.*
+import randomize.SkillName.*
 import skill.SkillDatabase
 
 const val AGE_MIN = 15
@@ -28,9 +30,9 @@ class TheRandomizer {
     fun randomizeAbilities(): List<Ability> {
         println("Randomizing abilities")
 
-        var strength = Ability("strength", 2)
-        var agility = Ability("agility", 2)
-        var perception = Ability("perception", 2)
+        var strength = Ability(Strength, 2)
+        var agility = Ability(Agility, 2)
+        var perception = Ability(Perception, 2)
 
         repeat(ABILITY_POINTS) {
             when ((0..2).random()) {
@@ -43,17 +45,39 @@ class TheRandomizer {
         return listOf(strength, agility, perception)
     }
 
-    fun randomizeInventory() {
-        println("Randomizing inventory")
-    }
-
     fun randomizeSkills(): List<Skill> {
         println("Randomizing skills")
 
         return skillData.getSkills()
             .shuffled()
             .take(SKILL_POINTS)
-            .map { Skill(name = it.name, level = 1) }
+            .map {
+                Skill(
+                    name = when (it.name) {
+                        "Acrobatics" -> Acrobatics
+                        "Climbing" -> Climbing
+                        "Demining" -> Demining
+                        "Fencing" -> Fencing
+                        "FirstAid" -> FirstAid
+                        "LockPicking" -> LockPicking
+                        "Mechanics" -> Mechanics
+                        "Observation" -> Observation
+                        "Piloting" -> Piloting
+                        "Shooting" -> Shooting
+                        "Sports" -> Sports
+                        "Stealth" -> Stealth
+                        "Survival" -> Survival
+                        "Swimming" -> Swimming
+                        "Wrestling" -> Wrestling
+                        else -> throw IllegalArgumentException("Unknown skill name")
+                    },
+                    level = 1
+                )
+            }
             .toList()
+    }
+
+    fun randomizeInventory() {
+        println("Randomizing inventory")
     }
 }

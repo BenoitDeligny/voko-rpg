@@ -1,6 +1,7 @@
 ﻿package exposition
 
-import domain.*
+import domain.RandomHeroUseCase
+import domain.driving.RandomHero
 import event.Event
 import event.Event.RandomHeroEvent
 import event.SimpleEventBus
@@ -13,7 +14,7 @@ import event.Subscriber
 // TODO: add tests
 class CreateRandomHeroHandler : Subscriber<RandomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
-    private val randomHeroUseCase = RandomHeroUseCase()
+    private val randomHeroUseCase: RandomHero = RandomHeroUseCase()
 
     init {
         eventBus.register(this)
@@ -22,14 +23,7 @@ class CreateRandomHeroHandler : Subscriber<RandomHeroEvent> {
     override fun invoke(event: RandomHeroEvent) {
         println("Creating a random hero: $event")
 
-        // TODO: random name
-        // TODO: random age
-        // TODO: random abilities
-        // TODO: random inventory
-        // TODO: random skills
-
-        println("Hero to create: $hero")
-        randomHeroUseCase.create(hero)
+        randomHeroUseCase.create()
     }
 }
 
