@@ -1,5 +1,10 @@
 package randomize
 
+data class Name(
+    val firstName: String,
+    val lastName: String,
+)
+
 val lastNames = listOf(
     "Marcus", "Tiberius", "Lucius", "Gaius", "Quintus",
     "Decimus", "Aulus", "Claudius", "Servius", "Publius",

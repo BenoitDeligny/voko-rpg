@@ -23,6 +23,7 @@ class SkillDatabase {
     }
 
     fun getSkill(id: Int): SkillEntity? = skills.find { it.id == id }
+    fun getSkills() = skills
 }
 
 data class SkillEntity(
