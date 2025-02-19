@@ -12,24 +12,15 @@ const val SKILL_POINTS = 3
 class TheRandomizer {
     private val skillData = SkillDatabase()
 
-    fun randomizeName(): Name {
-        println("Randomizing name")
+    fun randomizeName(): Name = Name(
+        firstName = firstNames.random(),
+        lastName = lastNames.random()
+    )
 
-        return Name(
-            firstName = firstNames.random(),
-            lastName = lastNames.random()
-        )
-    }
+    fun randomizeAge(): Int = (AGE_MIN..AGE_MAX).random()
 
-    fun randomizeAge(): Int {
-        println("Randomizing age")
-
-        return (AGE_MIN..AGE_MAX).random()
-    }
-
+    // TODO: BUG HERE
     fun randomizeAbilities(): List<Ability> {
-        println("Randomizing abilities")
-
         var strength = Ability(Strength, 2)
         var agility = Ability(Agility, 2)
         var perception = Ability(Perception, 2)
@@ -45,39 +36,34 @@ class TheRandomizer {
         return listOf(strength, agility, perception)
     }
 
-    fun randomizeSkills(): List<Skill> {
-        println("Randomizing skills")
-
-        return skillData.getSkills()
-            .shuffled()
-            .take(SKILL_POINTS)
-            .map {
-                Skill(
-                    name = when (it.name) {
-                        "Acrobatics" -> Acrobatics
-                        "Climbing" -> Climbing
-                        "Demining" -> Demining
-                        "Fencing" -> Fencing
-                        "FirstAid" -> FirstAid
-                        "LockPicking" -> LockPicking
-                        "Mechanics" -> Mechanics
-                        "Observation" -> Observation
-                        "Piloting" -> Piloting
-                        "Shooting" -> Shooting
-                        "Sports" -> Sports
-                        "Stealth" -> Stealth
-                        "Survival" -> Survival
-                        "Swimming" -> Swimming
-                        "Wrestling" -> Wrestling
-                        else -> throw IllegalArgumentException("Unknown skill name")
-                    },
-                    level = 1
-                )
-            }
-            .toList()
-    }
+    fun randomizeSkills(): List<Skill> = skillData.getSkills()
+        .shuffled()
+        .take(SKILL_POINTS)
+        .map {
+            Skill(
+                name = when (it.name) {
+                    "Acrobatics" -> Acrobatics
+                    "Climbing" -> Climbing
+                    "Demining" -> Demining
+                    "Fencing" -> Fencing
+                    "FirstAid" -> FirstAid
+                    "LockPicking" -> LockPicking
+                    "Mechanics" -> Mechanics
+                    "Observation" -> Observation
+                    "Piloting" -> Piloting
+                    "Shooting" -> Shooting
+                    "Sports" -> Sports
+                    "Stealth" -> Stealth
+                    "Survival" -> Survival
+                    "Swimming" -> Swimming
+                    "Wrestling" -> Wrestling
+                    else -> throw IllegalArgumentException("Unknown skill name")
+                },
+                level = 1
+            )
+        }
+        .toList()
 
     fun randomizeInventory() {
-        println("Randomizing inventory")
     }
 }

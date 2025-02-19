@@ -1,19 +1,23 @@
 import event.Event
-import event.Event.CustomHeroEvent.ItemEvent
-import event.Event.CustomHeroEvent.SkillEvent
+import event.Event.CustomHeroEvent
+import event.Event.CustomHeroEvent.*
+import event.Event.RandomHeroEvent
 import event.SimpleEventBus
 import exposition.CreateCustomHeroHandler
+import exposition.CreateRandomHeroHandler
 
 fun main() {
     println("-----Hello and welcome in a Very Old Kind Of RPG!-----")
 
+    // TODO: this PubSub system DOES NOT WORK
     // TODO: remove this
     // this is for example and simulation of event bus
     val eventBus = SimpleEventBus<Event>()
     val createCustomHeroHandler = CreateCustomHeroHandler()
+    val createRandomHeroHandler = CreateRandomHeroHandler()
 
-    val customHeroEvent = Event.CustomHeroEvent(
-        name = "Arthur",
+    val customHeroEvent = CustomHeroEvent(
+        name = NameEvent(firstName = "Arthur", lastName = "Dent"),
         age = 18,
         strength = 8,
         agility = 6,
@@ -26,4 +30,8 @@ fun main() {
 
     createCustomHeroHandler.invoke(customHeroEvent)
     eventBus.publish(customHeroEvent)
+
+    val randomHeroEvent = RandomHeroEvent
+    createRandomHeroHandler.invoke(randomHeroEvent)
+    eventBus.publish(randomHeroEvent)
 }

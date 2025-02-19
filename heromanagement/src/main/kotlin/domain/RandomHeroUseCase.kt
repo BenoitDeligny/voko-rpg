@@ -32,6 +32,8 @@ class RandomHeroUseCase : RandomHero {
             skills = skills,
         )
 
+        println("Creating a random hero: $hero")
+
         heroRepository.add(hero)
     }
 }
