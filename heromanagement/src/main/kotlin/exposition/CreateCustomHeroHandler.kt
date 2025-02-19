@@ -33,10 +33,10 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     override fun invoke(event: CustomHeroEvent) {
         println("Creating a custom hero: $event")
 
-        val heroToCreate = event.toHeroDomain()
-        println("Hero to create: $heroToCreate")
+        val hero = event.toHeroDomain()
+        println("Hero to create: $hero")
 
-        customHeroUseCase.create(heroToCreate)
+        customHeroUseCase.create(hero)
     }
 
     private fun CustomHeroEvent.toHeroDomain() = Hero(

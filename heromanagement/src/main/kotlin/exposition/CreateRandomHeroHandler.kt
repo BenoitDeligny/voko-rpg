@@ -21,6 +21,15 @@ class CreateRandomHeroHandler : Subscriber<RandomHeroEvent> {
 
     override fun invoke(event: RandomHeroEvent) {
         println("Creating a random hero: $event")
+
+        // TODO: random name
+        // TODO: random age
+        // TODO: random abilities
+        // TODO: random inventory
+        // TODO: random skills
+
+        println("Hero to create: $hero")
+        randomHeroUseCase.create(hero)
     }
 }
 
