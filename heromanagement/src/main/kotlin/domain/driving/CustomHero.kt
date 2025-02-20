@@ -1,6 +1,6 @@
 ﻿package domain.driving
 
-import domain.Hero
+import domain.model.Hero
 
 interface CustomHero {
     fun create(hero: Hero)

@@ -1,6 +1,6 @@
 ﻿package infrastructure
 
-import domain.Hero
+import domain.model.Hero
 import domain.driven.HeroRepository
 
 class InMemoryHeroRepository : HeroRepository {

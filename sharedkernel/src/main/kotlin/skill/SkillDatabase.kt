@@ -22,11 +22,11 @@ class SkillDatabase {
         skills.add(SkillEntity(id = 15, name = "Wrestling"))
     }
 
-    fun getSkill(id: Int): SkillEntity? = skills.find { it.id == id }
-    fun getSkills() = skills
-}
+    fun skill(id: Int): SkillEntity? = skills.find { it.id == id }
+    fun skills(): MutableSet<SkillEntity> = skills
 
-data class SkillEntity(
-    val id: Int,
-    val name: String,
-)
+    data class SkillEntity(
+        val id: Int,
+        val name: String,
+    )
+}

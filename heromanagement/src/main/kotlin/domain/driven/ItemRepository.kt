@@ -1,6 +1,6 @@
 ﻿package domain.driven
 
-import domain.ItemResponse
+import domain.model.ItemResponse
 
 interface ItemRepository {
     fun getItem(id: Int): ItemResponse

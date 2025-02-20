@@ -2,6 +2,7 @@
 
 import domain.driven.HeroRepository
 import domain.driving.CustomHero
+import domain.model.Hero
 import infrastructure.InMemoryHeroRepository
 
 // TODO: use dependency injection here

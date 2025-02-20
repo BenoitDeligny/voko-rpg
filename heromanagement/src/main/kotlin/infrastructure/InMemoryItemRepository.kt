@@ -1,8 +1,8 @@
 ﻿package infrastructure
 
-import domain.ItemResponse
-import domain.ItemResponse.Item
-import domain.ItemResponse.ItemNotFound
+import domain.model.ItemResponse
+import domain.model.ItemResponse.Item
+import domain.model.ItemResponse.ItemNotFound
 import domain.driven.ItemRepository
 import item.ItemDatabase
 

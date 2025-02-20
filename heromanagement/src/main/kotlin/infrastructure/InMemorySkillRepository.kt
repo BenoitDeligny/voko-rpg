@@ -1,34 +1,37 @@
 ﻿package infrastructure
 
-import domain.SkillName.*
-import domain.SkillResponse
-import domain.SkillResponse.Skill
-import domain.SkillResponse.SkillNotFound
+import domain.model.Skill
+import domain.model.Skill.*
 import domain.driven.SkillRepository
 import skill.SkillDatabase
+import skill.SkillDatabase.SkillEntity
 
 class InMemorySkillRepository : SkillRepository {
     private val database = SkillDatabase()
 
-    override fun getSkill(id: Int): SkillResponse = when (val entity = database.getSkill(id)) {
+    override fun skill(id: Int): Skill = when (val entity = database.skill(id)) {
         null -> SkillNotFound
-        else -> when (entity.name) {
-            "Acrobatics" -> Skill(Acrobatics)
-            "Climbing" -> Skill(Climbing)
-            "Demining" -> Skill(Demining)
-            "Fencing" -> Skill(Fencing)
-            "FirstAid" -> Skill(FirstAid)
-            "LockPicking" -> Skill(LockPicking)
-            "Mechanics" -> Skill(Mechanics)
-            "Observation" -> Skill(Observation)
-            "Piloting" -> Skill(Piloting)
-            "Shooting" -> Skill(Shooting)
-            "Sports" -> Skill(Sports)
-            "Stealth" -> Skill(Stealth)
-            "Survival" -> Skill(Survival)
-            "Swimming" -> Skill(Swimming)
-            "Wrestling" -> Skill(Wrestling)
-            else -> SkillNotFound
-        }
+        else -> entity.toSkill()
+    }
+
+    override fun skills(): List<Skill> = database.skills().map { it.toSkill() }
+
+    private fun SkillEntity.toSkill(): Skill = when (name) {
+        "Acrobatics" -> Acrobatics()
+        "Climbing" -> Climbing()
+        "Demining" -> Demining()
+        "Fencing" -> Fencing()
+        "FirstAid" -> FirstAid()
+        "LockPicking" -> LockPicking()
+        "Mechanics" -> Mechanics()
+        "Observation" -> Observation()
+        "Piloting" -> Piloting()
+        "Shooting" -> Shooting()
+        "Sports" -> Sports()
+        "Stealth" -> Stealth()
+        "Survival" -> Survival()
+        "Swimming" -> Swimming()
+        "Wrestling" -> Wrestling()
+        else -> SkillNotFound
     }
 }

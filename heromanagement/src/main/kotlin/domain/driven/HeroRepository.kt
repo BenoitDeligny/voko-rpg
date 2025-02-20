@@ -1,6 +1,6 @@
 ﻿package domain.driven
 
-import domain.Hero
+import domain.model.Hero
 
 interface HeroRepository {
     fun add(hero: Hero)

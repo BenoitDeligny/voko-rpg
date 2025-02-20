@@ -1,14 +1,19 @@
 ﻿package exposition
 
 import domain.*
-import domain.Ability.*
-import domain.ItemResponse.Item
-import domain.ItemResponse.ItemNotFound
-import domain.SkillResponse.Skill
-import domain.SkillResponse.SkillNotFound
+import domain.model.Ability.*
+import domain.model.ItemResponse.Item
+import domain.model.ItemResponse.ItemNotFound
 import domain.driving.CustomHero
 import domain.driving.GetItem
 import domain.driving.GetSkill
+import domain.model.Age
+import domain.model.Hero
+import domain.model.Name
+import domain.model.Name.FirstName
+import domain.model.Name.LastName
+import domain.model.Skill
+import domain.model.Skill.*
 import event.Event
 import event.Event.CustomHeroEvent
 import event.Event.CustomHeroEvent.ItemEvent
@@ -41,7 +46,10 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     }
 
     private fun CustomHeroEvent.toHeroDomain() = Hero(
-        name = Name(name.firstName, name.lastName),
+        name = Name(
+            firstName = FirstName(name.firstName),
+            lastName = LastName(name.lastName)
+        ),
         age = Age(age),
         strength = Strength(strength),
         agility = Agility(agility),
@@ -59,7 +67,21 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
 
     private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
         when (val skill = getSkillUseCase.getSkill(it.id)) {
-            is Skill -> Skill(name = skill.name, level = it.level)
+            is Acrobatics -> skill.copy(level = it.level)
+            is Climbing -> skill.copy(level = it.level)
+            is Demining -> skill.copy(level = it.level)
+            is Fencing -> skill.copy(level = it.level)
+            is FirstAid -> skill.copy(level = it.level)
+            is LockPicking -> skill.copy(level = it.level)
+            is Mechanics -> skill.copy(level = it.level)
+            is Observation -> skill.copy(level = it.level)
+            is Piloting -> skill.copy(level = it.level)
+            is Shooting -> skill.copy(level = it.level)
+            is Sports -> skill.copy(level = it.level)
+            is Stealth -> skill.copy(level = it.level)
+            is Survival -> skill.copy(level = it.level)
+            is Swimming -> skill.copy(level = it.level)
+            is Wrestling -> skill.copy(level = it.level)
             is SkillNotFound -> null
         }
     }
