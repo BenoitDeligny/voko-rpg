@@ -16,19 +16,16 @@ class RandomHeroUseCase : RandomHero {
     override fun create() {
         val name = randomizeRepository.randomizeName()
         val age = randomizeRepository.randomizeAge()
-        // TODO: rework this as randomizeStrength and so on
         val abilities = randomizeRepository.randomizeAbilities()
-        val strength = abilities.find { it is Strength } as Strength
-        val agility = abilities.find { it is Agility } as Agility
-        val perception = abilities.find { it is Perception } as Perception
         val skills = randomizeRepository.randomizeSkills()
 
         val hero = Hero(
             name = name,
             age = age,
-            strength = strength,
-            agility = agility,
-            perception = perception,
+            // TODO: what is better ?
+            strength = Strength(abilities.first { it is Strength }.value),
+            agility = abilities.find { it is Agility } as Agility,
+            perception = abilities.find { it is Perception } as Perception,
 //            inventory = TODO(),
             skills = skills,
         )
