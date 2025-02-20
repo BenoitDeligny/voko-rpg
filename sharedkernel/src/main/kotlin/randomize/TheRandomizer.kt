@@ -19,7 +19,6 @@ class TheRandomizer {
 
     fun randomizeAge(): Int = (AGE_MIN..AGE_MAX).random()
 
-    // TODO: BUG HERE
     fun randomizeAbilities(): List<Ability> {
         var strength = Ability(Strength, 2)
         var agility = Ability(Agility, 2)
