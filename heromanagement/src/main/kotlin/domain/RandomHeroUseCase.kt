@@ -33,7 +33,7 @@ class RandomHeroUseCase : RandomHero {
             agility = randomAbilities.first { it is Agility } as Agility,
             perception = randomAbilities.first { it is Perception } as Perception,
 //            inventory = TODO(),
-            skills = randomSkills(),
+//            skills = randomSkills(),
         )
 
         println("Creating a random hero: $hero")

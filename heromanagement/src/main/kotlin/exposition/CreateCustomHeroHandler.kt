@@ -1,19 +1,11 @@
 ﻿package exposition
 
-import domain.*
-import domain.model.Ability.*
-import domain.model.ItemResponse.Item
-import domain.model.ItemResponse.ItemNotFound
+import domain.CustomHeroUseCase
 import domain.driving.CustomHero
-import domain.driving.GetItem
-import domain.driving.GetSkill
-import domain.model.Age
-import domain.model.Hero
-import domain.model.Name
+import domain.model.*
+import domain.model.Ability.*
 import domain.model.Name.FirstName
 import domain.model.Name.LastName
-import domain.model.Skill
-import domain.model.Skill.*
 import event.Event
 import event.Event.CustomHeroEvent
 import event.Event.CustomHeroEvent.ItemEvent
@@ -29,8 +21,8 @@ import event.Subscriber
 class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
-    private val getItemUseCase: GetItem = GetItemUseCase()
-    private val getSkillUseCase: GetSkill = GetSkillUseCase()
+//    private val getItemUseCase: GetItem = GetItemUseCase()
+//    private val getSkillUseCase: GetSkill = GetSkillUseCase()
 
     init {
         eventBus.register(this)
@@ -58,33 +50,36 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
         skills = skills.toSkillDomain(),
     )
 
-    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
-        when (val item = getItemUseCase.getItem(it.id)) {
-            is Item -> Item(id = item.id, item.name)
-            is ItemNotFound -> null
-        }
-    }
+    private fun List<ItemEvent>.toItemDomain() = mapNotNull { ItemBis(it.id) }
+    private fun List<SkillEvent>.toSkillDomain() = mapNotNull { SkillBis(id = it.id, level = it.level) }
 
-    private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
-        when (val skill = getSkillUseCase.getSkill(it.id)) {
-            is Acrobatics -> skill.copy(level = it.level)
-            is Climbing -> skill.copy(level = it.level)
-            is Demining -> skill.copy(level = it.level)
-            is Fencing -> skill.copy(level = it.level)
-            is FirstAid -> skill.copy(level = it.level)
-            is LockPicking -> skill.copy(level = it.level)
-            is Mechanics -> skill.copy(level = it.level)
-            is Observation -> skill.copy(level = it.level)
-            is Piloting -> skill.copy(level = it.level)
-            is Shooting -> skill.copy(level = it.level)
-            is Sports -> skill.copy(level = it.level)
-            is Stealth -> skill.copy(level = it.level)
-            is Survival -> skill.copy(level = it.level)
-            is Swimming -> skill.copy(level = it.level)
-            is Wrestling -> skill.copy(level = it.level)
-            is SkillNotFound -> null
-        }
-    }
+//    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
+//        when (val item = getItemUseCase.getItem(it.id)) {
+//            is Item -> Item(id = item.id, item.name)
+//            is ItemNotFound -> null
+//        }
+//    }
+//
+//    private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
+//        when (val skill = getSkillUseCase.getSkill(it.id)) {
+//            is Acrobatics -> skill.copy(level = it.level)
+//            is Climbing -> skill.copy(level = it.level)
+//            is Demining -> skill.copy(level = it.level)
+//            is Fencing -> skill.copy(level = it.level)
+//            is FirstAid -> skill.copy(level = it.level)
+//            is LockPicking -> skill.copy(level = it.level)
+//            is Mechanics -> skill.copy(level = it.level)
+//            is Observation -> skill.copy(level = it.level)
+//            is Piloting -> skill.copy(level = it.level)
+//            is Shooting -> skill.copy(level = it.level)
+//            is Sports -> skill.copy(level = it.level)
+//            is Stealth -> skill.copy(level = it.level)
+//            is Survival -> skill.copy(level = it.level)
+//            is Swimming -> skill.copy(level = it.level)
+//            is Wrestling -> skill.copy(level = it.level)
+//            is SkillNotFound -> null
+//        }
+//    }
 }
 
 

@@ -19,3 +19,5 @@ sealed class Skill {
 
     data object SkillNotFound : Skill()
 }
+
+data class SkillBis(val id: Int, val level: Int)
