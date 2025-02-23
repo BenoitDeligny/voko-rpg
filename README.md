@@ -24,7 +24,6 @@ and both a build cache and a configuration cache (see `gradle.properties`).
 
 # vokorpg todoes
 
-TODO:
 Front
 
 - https://svelteui.dev/introduction

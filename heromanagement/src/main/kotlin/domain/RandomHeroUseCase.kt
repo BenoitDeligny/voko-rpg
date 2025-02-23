@@ -1,25 +1,31 @@
 package domain
 
 import domain.driven.HeroRepository
+import domain.driven.ItemRepository
 import domain.driven.NameRepository
 import domain.driving.RandomHero
 import domain.model.*
 import domain.model.Ability.*
+import domain.model.ItemResponse.Item
+import domain.model.ItemResponse.ItemNotFound
 import domain.model.Skill.*
 import domain.model.Skills.Companion.skills
 import infrastructure.InMemoryHeroRepository
+import infrastructure.InMemoryItemRepository
 import infrastructure.InMemoryNameRepository
 
 private const val AGE_MIN = 15
 private const val AGE_MAX = 20
 private const val ABILITY_POINTS = 6
 private const val SKILL_POINTS = 3
+private const val NUMBER_OF_ITEMS = 2
 
 // TODO: use dependency injection here
 // TODO: add tests
 class RandomHeroUseCase : RandomHero {
     private val nameRepository: NameRepository = InMemoryNameRepository()
     private val heroRepository: HeroRepository = InMemoryHeroRepository()
+    private val itemRepository: ItemRepository = InMemoryItemRepository()
 
     override fun create() {
         val randomAbilities = randomAbilities()
@@ -30,7 +36,7 @@ class RandomHeroUseCase : RandomHero {
             strength = randomAbilities.first { it is Strength } as Strength,
             agility = randomAbilities.first { it is Agility } as Agility,
             perception = randomAbilities.first { it is Perception } as Perception,
-//            inventory = TODO(),
+            inventory = randomInventory(),
             skills = randomSkills(),
         )
 
@@ -62,9 +68,19 @@ class RandomHeroUseCase : RandomHero {
         return listOf(strength, agility, perception)
     }
 
-    private fun randomInventory() {
-
-    }
+    // TODO: should have at least
+    //  1 one-handed weapon + 1 shield OR 1 two-handed weapon
+    //  1 protection item
+    //  1 healing potion
+    private fun randomInventory(): List<Item> = itemRepository.starterItems()
+        .shuffled()
+        .take(NUMBER_OF_ITEMS)
+        .mapNotNull { item ->
+            when (item) {
+                is Item -> item
+                ItemNotFound -> null
+            }
+        }
 
     private fun randomSkills(): Skills = skills
         .shuffled()

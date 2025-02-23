@@ -4,5 +4,6 @@ import domain.model.ItemResponse
 import domain.model.ItemResponse.Item
 
 interface ItemRepository {
-    fun getItem(item: Item): ItemResponse
+    fun find(item: Item): ItemResponse
+    fun starterItems(): List<ItemResponse>
 }

@@ -1,9 +1,9 @@
 ﻿package exposition
 
 import domain.CustomHeroUseCase
-import domain.GetItemUseCase
+import domain.ItemsService
 import domain.driving.CustomHero
-import domain.driving.GetItem
+import domain.driving.Items
 import domain.model.Ability.*
 import domain.model.Age
 import domain.model.Hero
@@ -31,8 +31,7 @@ import event.Subscriber
 class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
-    // TODO: think about refactoring this
-    private val getItemUseCase: GetItem = GetItemUseCase()
+    private val itemsService: Items = ItemsService()
 
     init {
         eventBus.register(this)
@@ -41,13 +40,13 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     override fun invoke(event: CustomHeroEvent) {
         println("Creating a custom hero: $event")
 
-        val hero = event.toHeroDomain()
+        val hero = event.toHero()
         println("Hero to create: $hero")
 
         customHeroUseCase.create(hero)
     }
 
-    private fun CustomHeroEvent.toHeroDomain() = Hero(
+    private fun CustomHeroEvent.toHero() = Hero(
         name = Name(
             firstName = FirstName(name.firstName),
             lastName = LastName(name.lastName)
@@ -56,24 +55,24 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
         strength = Strength(strength),
         agility = Agility(agility),
         perception = Perception(perception),
-        inventory = inventory.toItemDomain(),
-        skills = skills.toSkillsDomain(),
+        inventory = inventory.toItem(),
+        skills = skills.toSkills(),
     )
 
-    private fun List<ItemEvent>.toItemDomain() = mapNotNull { itemEvent ->
+    private fun List<ItemEvent>.toItem() = mapNotNull { itemEvent ->
         when (itemEvent.type) {
             "Weapon" -> Item(id = itemEvent.id, type = WEAPON)
             "Shield" -> Item(id = itemEvent.id, type = SHIELD)
             else -> null
         }?.let { item ->
-            when (getItemUseCase.getItem(item)) {
+            when (itemsService.find(item)) {
                 is Item -> item
                 is ItemNotFound -> null
             }
         }
     }
 
-    private fun List<SkillEvent>.toSkillsDomain(): Skills = fold(Skills()) { skills, event ->
+    private fun List<SkillEvent>.toSkills(): Skills = fold(Skills()) { skills, event ->
         when (event.name) {
             "Acrobatics" -> skills.copy(acrobatics = Acrobatics(event.level))
             "Climbing" -> skills.copy(climbing = Climbing(event.level))

@@ -6,6 +6,8 @@ sealed interface ItemResponse {
 }
 
 enum class ItemType {
+    BOOTS,
+    HELMET,
     SHIELD,
     WEAPON
 }
