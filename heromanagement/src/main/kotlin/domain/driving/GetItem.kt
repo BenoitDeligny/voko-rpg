@@ -1,7 +1,8 @@
 ﻿package domain.driving
 
 import domain.model.ItemResponse
+import domain.model.ItemResponse.Item
 
 interface GetItem {
-    fun getItem(id: Int): ItemResponse
+    fun getItem(item: Item): ItemResponse
 }

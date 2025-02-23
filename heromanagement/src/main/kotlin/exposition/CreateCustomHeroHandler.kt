@@ -9,6 +9,8 @@ import domain.model.Age
 import domain.model.Hero
 import domain.model.ItemResponse.Item
 import domain.model.ItemResponse.ItemNotFound
+import domain.model.ItemType.SHIELD
+import domain.model.ItemType.WEAPON
 import domain.model.Name
 import domain.model.Name.FirstName
 import domain.model.Name.LastName
@@ -29,7 +31,6 @@ import event.Subscriber
 class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
-
     // TODO: think about refactoring this
     private val getItemUseCase: GetItem = GetItemUseCase()
 
@@ -59,10 +60,16 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
         skills = skills.toSkillsDomain(),
     )
 
-    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
-        when (val item = getItemUseCase.getItem(it.id)) {
-            is Item -> Item(id = item.id)
-            is ItemNotFound -> null
+    private fun List<ItemEvent>.toItemDomain() = mapNotNull { itemEvent ->
+        when (itemEvent.type) {
+            "Weapon" -> Item(id = itemEvent.id, type = WEAPON)
+            "Shield" -> Item(id = itemEvent.id, type = SHIELD)
+            else -> null
+        }?.let { item ->
+            when (getItemUseCase.getItem(item)) {
+                is Item -> item
+                is ItemNotFound -> null
+            }
         }
     }
 

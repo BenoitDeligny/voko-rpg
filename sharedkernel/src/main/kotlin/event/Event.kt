@@ -25,8 +25,10 @@ sealed interface Event {
             val lastName: String,
         )
 
-        @JvmInline
-        value class ItemEvent(val id: Int)
+        data class ItemEvent(
+            val id: Int,
+            val type: String
+        )
 
         data class SkillEvent(
             val name: String,

@@ -22,7 +22,11 @@ fun main() {
         strength = 8,
         agility = 6,
         perception = 7,
-        inventory = listOf(ItemEvent(id = 1), ItemEvent(id = 2), ItemEvent(id = 3)),
+        inventory = listOf(
+            ItemEvent(id = 1, type = "Weapon"),
+            ItemEvent(id = 2, type = "Shield"),
+            ItemEvent(id = 3, type = "Helmet"),
+        ),
         skills = listOf(
             SkillEvent(name = "Demining", level = 1),
             SkillEvent(name = "2", level = 2),
