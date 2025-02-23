@@ -62,6 +62,10 @@ class RandomHeroUseCase : RandomHero {
         return listOf(strength, agility, perception)
     }
 
+    private fun randomInventory() {
+
+    }
+
     private fun randomSkills(): Skills = skills
         .shuffled()
         .take(SKILL_POINTS)
@@ -85,8 +89,4 @@ class RandomHeroUseCase : RandomHero {
                 else -> skills
             }
         }
-
-    private fun randomInventory() {
-
-    }
 }
