@@ -29,6 +29,8 @@ import event.Subscriber
 class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
+
+    // TODO: think about refactoring this
     private val getItemUseCase: GetItem = GetItemUseCase()
 
     init {

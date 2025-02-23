@@ -2,14 +2,13 @@ package domain
 
 import domain.driven.HeroRepository
 import domain.driven.NameRepository
-import domain.driven.SkillRepository
 import domain.driving.RandomHero
 import domain.model.*
 import domain.model.Ability.*
 import domain.model.Skill.*
+import domain.model.Skills.Companion.skills
 import infrastructure.InMemoryHeroRepository
 import infrastructure.InMemoryNameRepository
-import infrastructure.InMemorySkillRepository
 
 private const val AGE_MIN = 15
 private const val AGE_MAX = 20
@@ -20,7 +19,6 @@ private const val SKILL_POINTS = 3
 // TODO: add tests
 class RandomHeroUseCase : RandomHero {
     private val nameRepository: NameRepository = InMemoryNameRepository()
-    private val skillRepository: SkillRepository = InMemorySkillRepository()
     private val heroRepository: HeroRepository = InMemoryHeroRepository()
 
     override fun create() {
@@ -33,7 +31,7 @@ class RandomHeroUseCase : RandomHero {
             agility = randomAbilities.first { it is Agility } as Agility,
             perception = randomAbilities.first { it is Perception } as Perception,
 //            inventory = TODO(),
-//            skills = randomSkills(),
+            skills = randomSkills(),
         )
 
         println("Creating a random hero: $hero")
@@ -64,27 +62,27 @@ class RandomHeroUseCase : RandomHero {
         return listOf(strength, agility, perception)
     }
 
-    private fun randomSkills(): List<Skill> = skillRepository.skills()
+    private fun randomSkills(): Skills = skills
         .shuffled()
         .take(SKILL_POINTS)
-        .mapNotNull {
-            when (it) {
-                is Acrobatics -> it.copy(level = 1)
-                is Climbing -> it.copy(level = 1)
-                is Demining -> it.copy(level = 1)
-                is Fencing -> it.copy(level = 1)
-                is FirstAid -> it.copy(level = 1)
-                is LockPicking -> it.copy(level = 1)
-                is Mechanics -> it.copy(level = 1)
-                is Observation -> it.copy(level = 1)
-                is Piloting -> it.copy(level = 1)
-                is Shooting -> it.copy(level = 1)
-                is Sports -> it.copy(level = 1)
-                is Stealth -> it.copy(level = 1)
-                is Survival -> it.copy(level = 1)
-                is Swimming -> it.copy(level = 1)
-                is Wrestling -> it.copy(level = 1)
-                is SkillNotFound -> null
+        .fold(Skills()) { skills, skill ->
+            when (skill) {
+                "Acrobatics" -> skills.copy(acrobatics = Acrobatics(1))
+                "Climbing" -> skills.copy(climbing = Climbing(1))
+                "Demining" -> skills.copy(demining = Demining(1))
+                "Fencing" -> skills.copy(fencing = Fencing(1))
+                "FirstAid" -> skills.copy(firstAid = FirstAid(1))
+                "LockPicking" -> skills.copy(lockPicking = LockPicking(1))
+                "Mechanics" -> skills.copy(mechanics = Mechanics(1))
+                "Observation" -> skills.copy(observation = Observation(1))
+                "Piloting" -> skills.copy(piloting = Piloting(1))
+                "Shooting" -> skills.copy(shooting = Shooting(1))
+                "Sports" -> skills.copy(sports = Sports(1))
+                "Stealth" -> skills.copy(stealth = Stealth(1))
+                "Survival" -> skills.copy(survival = Survival(1))
+                "Swimming" -> skills.copy(swimming = Swimming(1))
+                "Wrestling" -> skills.copy(wrestling = Wrestling(1))
+                else -> skills
             }
         }
 

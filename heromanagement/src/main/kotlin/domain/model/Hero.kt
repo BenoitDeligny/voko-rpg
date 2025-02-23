@@ -33,4 +33,24 @@ data class Skills(
     val survival: Survival = Survival(0),
     val swimming: Swimming = Swimming(0),
     val wrestling: Wrestling = Wrestling(0),
-)
+) {
+    companion object {
+        val skills = listOf(
+            "Acrobatics",
+            "Climbing",
+            "Demining",
+            "Fencing",
+            "FirstAid",
+            "LockPicking",
+            "Mechanics",
+            "Observation",
+            "Piloting",
+            "Shooting",
+            "Sports",
+            "Stealth",
+            "Survival",
+            "Swimming",
+            "Wrestling"
+        )
+    }
+}
