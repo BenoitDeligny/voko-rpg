@@ -24,14 +24,17 @@ fun main() {
         perception = 7,
         inventory = listOf(ItemEvent(id = 1), ItemEvent(id = 2), ItemEvent(id = 3)),
         skills = listOf(
-            SkillEvent(id = 1, level = 1), SkillEvent(id = 2, level = 2), SkillEvent(id = 3, level = 3)
+            SkillEvent(name = "Demining", level = 1),
+            SkillEvent(name = "2", level = 2),
+            SkillEvent(name = "Acrobatics", level = 3)
         )
     )
+
+    val randomHeroEvent = RandomHeroEvent
 
     createCustomHeroHandler.invoke(customHeroEvent)
     eventBus.publish(customHeroEvent)
 
-    val randomHeroEvent = RandomHeroEvent
     createRandomHeroHandler.invoke(randomHeroEvent)
     eventBus.publish(randomHeroEvent)
 }

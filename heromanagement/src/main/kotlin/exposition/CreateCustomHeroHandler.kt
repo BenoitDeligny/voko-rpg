@@ -1,11 +1,19 @@
 ﻿package exposition
 
 import domain.CustomHeroUseCase
+import domain.GetItemUseCase
 import domain.driving.CustomHero
-import domain.model.*
+import domain.driving.GetItem
 import domain.model.Ability.*
+import domain.model.Age
+import domain.model.Hero
+import domain.model.ItemResponse.Item
+import domain.model.ItemResponse.ItemNotFound
+import domain.model.Name
 import domain.model.Name.FirstName
 import domain.model.Name.LastName
+import domain.model.Skill.*
+import domain.model.Skills
 import event.Event
 import event.Event.CustomHeroEvent
 import event.Event.CustomHeroEvent.ItemEvent
@@ -21,8 +29,7 @@ import event.Subscriber
 class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val customHeroUseCase: CustomHero = CustomHeroUseCase()
-//    private val getItemUseCase: GetItem = GetItemUseCase()
-//    private val getSkillUseCase: GetSkill = GetSkillUseCase()
+    private val getItemUseCase: GetItem = GetItemUseCase()
 
     init {
         eventBus.register(this)
@@ -47,39 +54,36 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
         agility = Agility(agility),
         perception = Perception(perception),
         inventory = inventory.toItemDomain(),
-        skills = skills.toSkillDomain(),
+        skills = skills.toSkillsDomain(),
     )
 
-    private fun List<ItemEvent>.toItemDomain() = mapNotNull { ItemBis(it.id) }
-    private fun List<SkillEvent>.toSkillDomain() = mapNotNull { SkillBis(id = it.id, level = it.level) }
+    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
+        when (val item = getItemUseCase.getItem(it.id)) {
+            is Item -> Item(id = item.id)
+            is ItemNotFound -> null
+        }
+    }
 
-//    private fun List<ItemEvent>.toItemDomain() = mapNotNull {
-//        when (val item = getItemUseCase.getItem(it.id)) {
-//            is Item -> Item(id = item.id, item.name)
-//            is ItemNotFound -> null
-//        }
-//    }
-//
-//    private fun List<SkillEvent>.toSkillDomain() = mapNotNull {
-//        when (val skill = getSkillUseCase.getSkill(it.id)) {
-//            is Acrobatics -> skill.copy(level = it.level)
-//            is Climbing -> skill.copy(level = it.level)
-//            is Demining -> skill.copy(level = it.level)
-//            is Fencing -> skill.copy(level = it.level)
-//            is FirstAid -> skill.copy(level = it.level)
-//            is LockPicking -> skill.copy(level = it.level)
-//            is Mechanics -> skill.copy(level = it.level)
-//            is Observation -> skill.copy(level = it.level)
-//            is Piloting -> skill.copy(level = it.level)
-//            is Shooting -> skill.copy(level = it.level)
-//            is Sports -> skill.copy(level = it.level)
-//            is Stealth -> skill.copy(level = it.level)
-//            is Survival -> skill.copy(level = it.level)
-//            is Swimming -> skill.copy(level = it.level)
-//            is Wrestling -> skill.copy(level = it.level)
-//            is SkillNotFound -> null
-//        }
-//    }
+    private fun List<SkillEvent>.toSkillsDomain(): Skills = fold(Skills()) { skills, event ->
+        when (event.name) {
+            "Acrobatics" -> skills.copy(acrobatics = Acrobatics(event.level))
+            "Climbing" -> skills.copy(climbing = Climbing(event.level))
+            "Demining" -> skills.copy(demining = Demining(event.level))
+            "Fencing" -> skills.copy(fencing = Fencing(event.level))
+            "FirstAid" -> skills.copy(firstAid = FirstAid(event.level))
+            "LockPicking" -> skills.copy(lockPicking = LockPicking(event.level))
+            "Mechanics" -> skills.copy(mechanics = Mechanics(event.level))
+            "Observation" -> skills.copy(observation = Observation(event.level))
+            "Piloting" -> skills.copy(piloting = Piloting(event.level))
+            "Shooting" -> skills.copy(shooting = Shooting(event.level))
+            "Sports" -> skills.copy(sports = Sports(event.level))
+            "Stealth" -> skills.copy(stealth = Stealth(event.level))
+            "Survival" -> skills.copy(survival = Survival(event.level))
+            "Swimming" -> skills.copy(swimming = Swimming(event.level))
+            "Wrestling" -> skills.copy(wrestling = Wrestling(event.level))
+            else -> skills
+        }
+    }
 }
 
 

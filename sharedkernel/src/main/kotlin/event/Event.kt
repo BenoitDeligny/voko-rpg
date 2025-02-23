@@ -29,7 +29,7 @@ sealed interface Event {
         value class ItemEvent(val id: Int)
 
         data class SkillEvent(
-            val id: Int,
+            val name: String,
             val level: Int,
         )
     }

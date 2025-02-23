@@ -1,23 +1,21 @@
 ﻿package domain.model
 
 sealed class Skill {
-    data class Acrobatics(val level: Int = 0) : Skill()
-    data class Climbing(val level: Int = 0) : Skill()
-    data class Demining(val level: Int = 0) : Skill()
-    data class Fencing(val level: Int = 0) : Skill()
-    data class FirstAid(val level: Int = 0) : Skill()
-    data class LockPicking(val level: Int = 0) : Skill()
-    data class Mechanics(val level: Int = 0) : Skill()
-    data class Observation(val level: Int = 0) : Skill()
-    data class Piloting(val level: Int = 0) : Skill()
-    data class Shooting(val level: Int = 0) : Skill()
-    data class Sports(val level: Int = 0) : Skill()
-    data class Stealth(val level: Int = 0) : Skill()
-    data class Survival(val level: Int = 0) : Skill()
-    data class Swimming(val level: Int = 0) : Skill()
-    data class Wrestling(val level: Int = 0) : Skill()
+    open val level: Int get() = 0
 
-    data object SkillNotFound : Skill()
+    data class Acrobatics(override val level: Int) : Skill()
+    data class Climbing(override val level: Int) : Skill()
+    data class Demining(override val level: Int) : Skill()
+    data class Fencing(override val level: Int) : Skill()
+    data class FirstAid(override val level: Int) : Skill()
+    data class LockPicking(override val level: Int) : Skill()
+    data class Mechanics(override val level: Int) : Skill()
+    data class Observation(override val level: Int) : Skill()
+    data class Piloting(override val level: Int) : Skill()
+    data class Shooting(override val level: Int) : Skill()
+    data class Sports(override val level: Int) : Skill()
+    data class Stealth(override val level: Int) : Skill()
+    data class Survival(override val level: Int) : Skill()
+    data class Swimming(override val level: Int) : Skill()
+    data class Wrestling(override val level: Int) : Skill()
 }
-
-data class SkillBis(val id: Int, val level: Int)
