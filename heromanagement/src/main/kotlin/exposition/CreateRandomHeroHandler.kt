@@ -7,11 +7,11 @@ import event.Event.RandomHeroEvent
 import event.SimpleEventBus
 import event.Subscriber
 
-// TODO: as of today, this is a placeholder
+// as of today, this is a placeholder
 // but for now it "replace" a classic controller
 
-// TODO: use dependency injection here
-// TODO: add tests
+// use dependency injection here
+// add tests
 class CreateRandomHeroHandler : Subscriber<RandomHeroEvent> {
     private val eventBus = SimpleEventBus<Event>()
     private val randomHeroUseCase: RandomHero = RandomHeroUseCase()

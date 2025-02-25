@@ -20,8 +20,8 @@ private const val ABILITY_POINTS = 6
 private const val SKILL_POINTS = 3
 private const val NUMBER_OF_ITEMS = 2
 
-// TODO: use dependency injection here
-// TODO: add tests
+// use dependency injection here
+// add tests
 class RandomHeroUseCase : RandomHero {
     private val nameRepository: NameRepository = InMemoryNameRepository()
     private val heroRepository: HeroRepository = InMemoryHeroRepository()

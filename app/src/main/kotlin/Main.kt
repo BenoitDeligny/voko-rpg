@@ -9,8 +9,8 @@ import exposition.CreateRandomHeroHandler
 fun main() {
     println("-----Hello and welcome in a Very Old Kind Of RPG!-----")
 
-    // TODO: this PubSub system DOES NOT WORK
-    // TODO: remove this
+    // this PubSub system DOES NOT WORK
+    // remove this
     // this is for example and simulation of event bus
     val eventBus = SimpleEventBus<Event>()
     val createCustomHeroHandler = CreateCustomHeroHandler()

@@ -5,8 +5,8 @@ import domain.driving.CustomHero
 import domain.model.Hero
 import infrastructure.InMemoryHeroRepository
 
-// TODO: use dependency injection here
-// TODO: add tests
+// use dependency injection here
+// add tests
 class CustomHeroUseCase: CustomHero {
     private val heroRepository: HeroRepository = InMemoryHeroRepository()
 
