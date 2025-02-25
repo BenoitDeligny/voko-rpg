@@ -12,6 +12,7 @@ class InMemoryItemRepository : ItemRepository {
 
     override fun find(item: Item): ItemResponse = when (item.type) {
         BOOTS -> TODO()
+        CONSUMABLE -> TODO()
         HELMET -> TODO()
         SHIELD -> database.shield(item.id)?.let { Item(id = it.id, type = item.type) } ?: ItemNotFound
         WEAPON -> database.weapon(item.id)?.let { Item(id = it.id, type = item.type) } ?: ItemNotFound
@@ -21,6 +22,7 @@ class InMemoryItemRepository : ItemRepository {
         .map {
             when (it.type) {
                 "boots" -> Item(id = it.id, type = BOOTS)
+                "consumable" -> Item(id = it.id, type = CONSUMABLE)
                 "helmet" -> Item(id = it.id, type = HELMET)
                 "shield" -> Item(id = it.id, type = SHIELD)
                 "weapon" -> Item(id = it.id, type = WEAPON)

@@ -18,13 +18,20 @@ class ItemDatabase {
                 ),
                 StarterItemsEntity(
                     id = 1,
+                    name = "Shovel",
+                    type = "weapon",
+                    damages = 3,
+                    protection = 0,
+                ),
+                StarterItemsEntity(
+                    id = 2,
                     name = "Bin cover",
                     type = "shield",
                     damages = 0,
                     protection = 0,
                 ),
                 StarterItemsEntity(
-                    id = 2,
+                    id = 3,
                     name = "Crocs",
                     type = "boots",
                     damages = 0,
@@ -34,6 +41,20 @@ class ItemDatabase {
                     id = 4,
                     name = "Straw hat",
                     type = "helmet",
+                    damages = 0,
+                    protection = 0,
+                ),
+                StarterItemsEntity(
+                    id = 5,
+                    name = "Healing potion",
+                    type = "consumable",
+                    damages = 0,
+                    protection = 0,
+                ),
+                StarterItemsEntity(
+                    id = 6,
+                    name = "Mana potion",
+                    type = "consumable",
                     damages = 0,
                     protection = 0,
                 ),
@@ -92,6 +113,8 @@ data class StarterItemsEntity(
     val type: String,
     val damages: Int,
     val protection: Int,
+    // TODO: add consumable effect
+    // TODO: add one-handed/two-handed weapon
 )
 
 data class ShieldEntity(
