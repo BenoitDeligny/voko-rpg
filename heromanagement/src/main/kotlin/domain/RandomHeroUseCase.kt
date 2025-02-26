@@ -74,20 +74,22 @@ class RandomHeroUseCase : RandomHero {
         val weapons = itemRepository.starterItems()
             .filterIsInstance<Item>()
             .filter { it.type == ItemType.WEAPON }
+            .shuffled()
+            .take(NUMBER_OF_WEAPONS)
 
         val other = itemRepository.starterItems()
             .filterIsInstance<Item>()
             .filter { it.type != ItemType.WEAPON && it.type != ItemType.CONSUMABLE }
+            .shuffled()
+            .take(NUMBER_OF_ITEMS)
 
         val consumables = itemRepository.starterItems()
             .filterIsInstance<Item>()
             .filter { it.type == ItemType.CONSUMABLE }
+            .shuffled()
+            .take(NUMBER_OF_CONSUMABLES)
 
-        val randomWeapon = weapons.shuffled().take(NUMBER_OF_WEAPONS)
-        val randomOther = other.shuffled().take(NUMBER_OF_ITEMS)
-        val randomConsumables = consumables.shuffled().take(NUMBER_OF_CONSUMABLES)
-
-        return randomWeapon + randomOther + randomConsumables
+        return weapons + other + consumables
     }
 
     private fun randomSkills(): Skills = skills
