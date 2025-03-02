@@ -2,64 +2,10 @@ package item
 
 // Items data
 class ItemDatabase {
-    private val starterItems = mutableSetOf<StarterItemsEntity>()
     private val shields = mutableSetOf<ShieldEntity>()
     private val weapons = mutableSetOf<WeaponEntity>()
 
     init {
-        starterItems.addAll(
-            listOf(
-                StarterItemsEntity(
-                    id = 0,
-                    name = "Broomstick",
-                    type = "weapon",
-                    damages = 1,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 1,
-                    name = "Shovel",
-                    type = "weapon",
-                    damages = 3,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 2,
-                    name = "Bin cover",
-                    type = "shield",
-                    damages = 0,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 3,
-                    name = "Crocs",
-                    type = "boots",
-                    damages = 0,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 4,
-                    name = "Straw hat",
-                    type = "helmet",
-                    damages = 0,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 5,
-                    name = "Healing potion",
-                    type = "consumable",
-                    damages = 0,
-                    protection = 0,
-                ),
-                StarterItemsEntity(
-                    id = 6,
-                    name = "Mana potion",
-                    type = "consumable",
-                    damages = 0,
-                    protection = 0,
-                ),
-            )
-        )
         shields.addAll(
             listOf(
                 ShieldEntity(
@@ -69,6 +15,7 @@ class ItemDatabase {
                     powerBonus = 0,
                     protectionBonus = 0,
                     damagesBonus = 0,
+                    isStarterItem = true
                 ),
                 ShieldEntity(
                     id = 1,
@@ -85,37 +32,51 @@ class ItemDatabase {
                 WeaponEntity(
                     id = 0,
                     name = "Broomstick",
+                    property = "one-handed",
                     damages = 0,
+                    powerBonus = 0,
+                    protectionBonus = 0,
+                    damagesBonus = 0,
+                    isStarterItem = true,
+                ),
+                WeaponEntity(
+                    id = 1,
+                    name = "Shovel",
+                    property = "TWO_HANDED",
+                    damages = 0,
+                    powerBonus = 0,
+                    protectionBonus = 0,
+                    damagesBonus = 0,
+                    isStarterItem = true,
+                ),
+                WeaponEntity(
+                    id = 2,
+                    name = "Basic sword",
+                    property = "ONE_HANDED",
+                    damages = 1,
                     powerBonus = 0,
                     protectionBonus = 0,
                     damagesBonus = 0,
                 ),
                 WeaponEntity(
-                    id = 1,
-                    name = "Basic sword",
-                    damages = 1,
+                    id = 3,
+                    name = "Dagger",
+                    property = "LIGHT",
+                    damages = 2,
                     powerBonus = 0,
                     protectionBonus = 0,
                     damagesBonus = 0,
+                    isStarterItem = true,
                 )
             )
         )
     }
 
-    fun starterItems(): List<StarterItemsEntity> = starterItems.toList()
     fun shield(id: Int): ShieldEntity? = shields.find { it.id == id }
+    fun shields(): List<ShieldEntity> = shields.toList()
     fun weapon(id: Int): WeaponEntity? = weapons.find { it.id == id }
+    fun weapons(): List<WeaponEntity> = weapons.toList()
 }
-
-data class StarterItemsEntity(
-    val id: Int,
-    val name: String,
-    val type: String,
-    val damages: Int,
-    val protection: Int,
-    // TODO: add consumable effect
-    // TODO: add one-handed/two-handed weapon
-)
 
 data class ShieldEntity(
     val id: Int,
@@ -124,13 +85,16 @@ data class ShieldEntity(
     val powerBonus: Int,
     val protectionBonus: Int,
     val damagesBonus: Int,
+    val isStarterItem: Boolean = false,
 )
 
 data class WeaponEntity(
     val id: Int,
     val name: String,
+    val property: String,
     val damages: Int,
     val powerBonus: Int,
     val protectionBonus: Int,
     val damagesBonus: Int,
+    val isStarterItem: Boolean = false,
 )

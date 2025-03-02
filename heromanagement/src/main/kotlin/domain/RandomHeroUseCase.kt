@@ -7,6 +7,7 @@ import domain.driving.RandomHero
 import domain.model.*
 import domain.model.Ability.*
 import domain.model.ItemResponse.Item
+import domain.model.ItemResponse.Weapon
 import domain.model.Skill.*
 import domain.model.Skills.Companion.skills
 import infrastructure.InMemoryHeroRepository
@@ -69,27 +70,34 @@ class RandomHeroUseCase : RandomHero {
         return listOf(strength, agility, perception)
     }
 
-    // TODO: make it more precise in randomness
     private fun randomInventory(): List<Item> {
-        val weapons = itemRepository.starterItems()
-            .filterIsInstance<Item>()
-            .filter { it.type == ItemType.WEAPON }
-            .shuffled()
-            .take(NUMBER_OF_WEAPONS)
+        val weapons = randomWeapons()
 
-        val other = itemRepository.starterItems()
-            .filterIsInstance<Item>()
-            .filter { it.type != ItemType.WEAPON && it.type != ItemType.CONSUMABLE }
-            .shuffled()
-            .take(NUMBER_OF_ITEMS)
+//        val other = itemRepository.starterItems()
+//            .filterIsInstance<Item>()
+//            .filter { it.type != ItemType.WEAPON && it.type != ItemType.CONSUMABLE }
+//            .shuffled()
+//            .take(NUMBER_OF_ITEMS)
+//
+//        val consumables = itemRepository.starterItems()
+//            .filterIsInstance<Item>()
+//            .filter { it.type == ItemType.CONSUMABLE }
+//            .shuffled()
+//            .take(NUMBER_OF_CONSUMABLES)
 
-        val consumables = itemRepository.starterItems()
-            .filterIsInstance<Item>()
-            .filter { it.type == ItemType.CONSUMABLE }
-            .shuffled()
-            .take(NUMBER_OF_CONSUMABLES)
+        return weapons //+ other + consumables
+    }
 
-        return weapons + other + consumables
+    private fun randomWeapons(): List<Weapon> {
+        return List(NUMBER_OF_WEAPONS) {
+            val d100Roll = (1..100).random()
+
+            when {
+                d100Roll <= 34 -> listOf(itemRepository.starterOneHandedWeapons().random())
+                d100Roll <= 67 -> listOf(itemRepository.starterTwoHandedWeapons().random())
+                else -> List(2) { itemRepository.starterLightWeapons().random() }
+            }
+        }.flatten()
     }
 
     private fun randomSkills(): Skills = skills

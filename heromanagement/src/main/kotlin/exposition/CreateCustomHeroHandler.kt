@@ -7,8 +7,7 @@ import domain.driving.Items
 import domain.model.Ability.*
 import domain.model.Age
 import domain.model.Hero
-import domain.model.ItemResponse.Item
-import domain.model.ItemResponse.ItemNotFound
+import domain.model.ItemResponse.*
 import domain.model.ItemType.SHIELD
 import domain.model.ItemType.WEAPON
 import domain.model.Name
@@ -66,7 +65,7 @@ class CreateCustomHeroHandler : Subscriber<CustomHeroEvent> {
             else -> null
         }?.let { item ->
             when (itemsService.find(item)) {
-                is Item -> item
+                is Item, is Weapon -> item
                 is ItemNotFound -> null
             }
         }

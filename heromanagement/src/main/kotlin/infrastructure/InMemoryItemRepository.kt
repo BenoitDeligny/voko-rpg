@@ -2,9 +2,9 @@
 
 import domain.driven.ItemRepository
 import domain.model.ItemResponse
-import domain.model.ItemResponse.Item
-import domain.model.ItemResponse.ItemNotFound
+import domain.model.ItemResponse.*
 import domain.model.ItemType.*
+import domain.model.WeaponProperty.*
 import item.ItemDatabase
 
 class InMemoryItemRepository : ItemRepository {
@@ -18,15 +18,33 @@ class InMemoryItemRepository : ItemRepository {
         WEAPON -> database.weapon(item.id)?.let { Item(id = it.id, type = item.type) } ?: ItemNotFound
     }
 
-    override fun starterItems(): List<ItemResponse> = database.starterItems()
+    override fun starterOneHandedWeapons(): List<Weapon> = database.weapons()
+        .filter { it.property == "ONE_HANDED" }
+        .filter { it.isStarterItem }
         .map {
-            when (it.type) {
-                "boots" -> Item(id = it.id, type = BOOTS)
-                "consumable" -> Item(id = it.id, type = CONSUMABLE)
-                "helmet" -> Item(id = it.id, type = HELMET)
-                "shield" -> Item(id = it.id, type = SHIELD)
-                "weapon" -> Item(id = it.id, type = WEAPON)
-                else -> ItemNotFound
-            }
+            Weapon(
+                id = it.id,
+                property = ONE_HANDED
+            )
+        }
+
+    override fun starterTwoHandedWeapons(): List<Weapon> = database.weapons()
+        .filter { it.property == "TWO_HANDED" }
+        .filter { it.isStarterItem }
+        .map {
+            Weapon(
+                id = it.id,
+                property = TWO_HANDED
+            )
+        }
+
+    override fun starterLightWeapons(): List<Weapon> = database.weapons()
+        .filter { it.property == "LIGHT" }
+        .filter { it.isStarterItem }
+        .map {
+            Weapon(
+                id = it.id,
+                property = LIGHT
+            )
         }
 }
